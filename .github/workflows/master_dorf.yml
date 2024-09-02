@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - Dorf
+name: Build and deploy Python app to Azure Web App - dorf
 
 on:
   push:
@@ -65,14 +65,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B1C5AAE31E334099B708F6F0389A239D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5C74D2E6567E434F89ECAD6D5DD0B2EF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7FF4D5F8706F44BA9DF5D229D4F72787 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A86CF933A16544A590C16F045CA98E1F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_26FA4C8A91B0401CB90212A9AD2C056D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BEE8A748806B4FA2902D78E077ECEADD }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'Dorf'
+          app-name: 'dorf'
           slot-name: 'Production'
           
