@@ -57,6 +57,7 @@ def view_player(request,team,) :
             'image':pl.image,
             'team':team_name,
             'possition' :pl.position,
+            'nationality':pl.nationality,
             'age':age,
             'current value':curr,
             "goals" :pl.goals,
