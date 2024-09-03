@@ -46,23 +46,36 @@ class player(models.Model) :
 def transefer_player(sender,instance,**kwargs) :
     
     
+    
+    
     try :
-        if sender.team != instance.team:    
-            print(instance.team)
-            team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
-            team.squad["squad"].remove([instance.id,instance.name])
-            team.save()
-        if sender.objects.get(pk=instance.pk).team==None :
-            print(instance.team)
-            team=Team.objects.get(name=instance.team)
-            if [instance.id,instance.name] not in team.squad["squad"]:
-                team.squad["squad"].append([instance.id,instance.name])
+        print("==============================")
+        if sender.objects.get(pk=instance.pk).team != instance.team:
+            if sender.objects.get(pk=instance.pk).team != None and instance.team != None :
+                old_team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
+                new_team=Team.objects.get(name=instance.team)
+                old_team.squad["squad"].remove([instance.id,instance.name])
+                new_team.squad["squad"].append([instance.id,instance.name])
+                new_team.save()
+                old_team.save()
+                print("==============================")
+            else :
+                if sender.objects.get(pk=instance.pk).team == None :
+                    new_team=Team.objects.get(name=instance.team)
+                    new_team.squad["squad"].append([instance.id,instance.name])
+                    new_team.save()
+                elif instance.team == None :
+                    old_team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
+                    old_team.squad["squad"].remove([instance.id,instance.name])
+                    old_team.save()
     except :
         pass
 @receiver(post_save,sender=player)
 def add_playrt_to_squad(sender,instance,created,**kwargs) :
-    if instance.team !=None :
+    if created and instance.team !=None :
         team=Team.objects.get(name=instance.team)
+        if [instance.id,instance.name] not in team.squad["squad"]:
+                team.squad["squad"].append([instance.id,instance.name])
         if [instance.id,instance.name] not in team.squad["squad"]:
                 team.squad["squad"].append([instance.id,instance.name])
         team.save()
