@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_list_or_404
+import json
 from .models import *
 from django.http import HttpResponse, JsonResponse
 def getchamp(text)-> list :
@@ -33,5 +34,34 @@ def all_teams(request) :
         }
         l.append(mp)
     print(l)
+    return JsonResponse({"result" : l}) 
+def view_player(request,team,) :
+    obj=Team.objects.get(name=team).squad["squad"]
+    l=[]
+    for i in obj:
+        pl=player.objects.get(pk=i[0])
+        birth=str(pl.birht_date).strip()
+        print(pl.birht_date)
+        age=2024-int(birth)
+        curr=0
+        if pl.current_value != None :
+            if int(pl.current_value) <=1000 :
+                curr=f"{pl.current_value}k $"
+            else :
+                curr=f"{float(pl.current_value/1000)}m $"
+        dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':pl.team.name,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+        }
+        l.append(dat)
     return JsonResponse({"result" : l})
 # Create your views here.
