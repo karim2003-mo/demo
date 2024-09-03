@@ -44,24 +44,27 @@ class player(models.Model) :
         return self.name
 @receiver(pre_save,sender=player)
 def transefer_player(sender,instance,**kwargs) :
+    
+    
     try :
-        if sender.team != instance.team and sender.team != None:    
-            team=Team.objects.get(name=sender.team)
+        if sender.team != instance.team:    
+            print(instance.team)
+            team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
             team.squad["squad"].remove([instance.id,instance.name])
             team.save()
-        if sender.team == None :
+        if sender.objects.get(pk=instance.pk).team==None :
+            print(instance.team)
             team=Team.objects.get(name=instance.team)
-            team.squad["squad"].append([instance.id,instance.name])
-        if sender.name != instance.name :
-            team=Team.objects.get(name=instance.team)
-            team.squad["squad"].remove([sender.id,sender.name])
+            if [instance.id,instance.name] not in team.squad["squad"]:
+                team.squad["squad"].append([instance.id,instance.name])
     except :
         pass
 @receiver(post_save,sender=player)
 def add_playrt_to_squad(sender,instance,created,**kwargs) :
     if instance.team !=None :
         team=Team.objects.get(name=instance.team)
-        team.squad["squad"].append([instance.id,instance.name])
+        if [instance.id,instance.name] not in team.squad["squad"]:
+                team.squad["squad"].append([instance.id,instance.name])
         team.save()
 @receiver(post_delete,sender=player)
 def delete_playrt_from_squad(sender,instance,**kwargs) :

@@ -33,7 +33,6 @@ def all_teams(request) :
             "squad" : team.squad,
         }
         l.append(mp)
-    print(l)
     return JsonResponse({"result" : l}) 
 def view_player(request,team,) :
     obj=Team.objects.get(name=team).squad["squad"]
@@ -41,7 +40,6 @@ def view_player(request,team,) :
     for i in obj:
         pl=player.objects.get(pk=i[0])
         birth=str(pl.birht_date).strip()
-        print(pl.birht_date)
         age=2024-int(birth)
         curr=0
         if pl.current_value != None :
@@ -49,12 +47,15 @@ def view_player(request,team,) :
                 curr=f"{pl.current_value}k $"
             else :
                 curr=f"{float(pl.current_value/1000)}m $"
+        team_name=""
+        if pl.team !=None :
+            team_name=pl.team.name
         dat= {
             'id':pl.pk,
             'name' :pl.name,
             'number':pl.number,
             'image':pl.image,
-            'team':pl.team.name,
+            'team':team_name,
             'age':age,
             'current value':curr,
             "goals" :pl.goals,
