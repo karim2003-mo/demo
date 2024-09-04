@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8jd(ay)slh-^k1qu2r0+6u*g_bph-tmqgn40nydacq4ak0^b^e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+DEBUG = True
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://dorf-eqgke9bqgzb3hgeg.norwayeast-01.azurewebsites.net']
 
