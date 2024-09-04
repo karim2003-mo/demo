@@ -62,7 +62,14 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
+      - name: Commit and Push changes
+        if: env.has_changes == 'true'
+        run: |
+          git config user.name "Karim Gamal Elsayed"
+          git config user.email "kareemabolisa@gmail.com"
+          git add db.sqlite3
+          git commit -am "Automated commit: Update SQLite database"
+          git push origin master
       
       - name: Login to Azure
         uses: azure/login@v2
