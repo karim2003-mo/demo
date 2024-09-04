@@ -9,6 +9,8 @@ on:
     branches:
       - master
   workflow_dispatch:
+  repository_dispatch:
+    types: [data_changed]
 
 jobs:
   build:
