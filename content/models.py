@@ -1,6 +1,9 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save ,pre_save,post_delete
+import sqlite3
+import os
+from Test.settings import BASE_DIR
 class Team(models.Model) :
     name = models.CharField(max_length=30,null=True,blank=True)
     founded_at = models.DateField(null=True,blank=True)
@@ -50,6 +53,7 @@ def transefer_player(sender,instance,**kwargs) :
     
     try :
         print("==============================")
+        db=sqlite3.connect(os.path.join(BASE_DIR,'db.sqlite3'))
         if sender.objects.get(pk=instance.pk).team != instance.team:
             if sender.objects.get(pk=instance.pk).team != None and instance.team != None :
                 old_team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
@@ -68,19 +72,24 @@ def transefer_player(sender,instance,**kwargs) :
                     old_team=Team.objects.get(name=sender.objects.get(pk=instance.pk).team)
                     old_team.squad["squad"].remove([instance.id,instance.name])
                     old_team.save()
+            db.commit()
     except :
         pass
 @receiver(post_save,sender=player)
 def add_playrt_to_squad(sender,instance,created,**kwargs) :
     if created and instance.team !=None :
+        db=sqlite3.connect(os.path.join(BASE_DIR,'db.sqlite3'))
         team=Team.objects.get(name=instance.team)
         if [instance.id,instance.name] not in team.squad["squad"]:
                 team.squad["squad"].append([instance.id,instance.name])
         if [instance.id,instance.name] not in team.squad["squad"]:
                 team.squad["squad"].append([instance.id,instance.name])
         team.save()
+        db.commit()
 @receiver(post_delete,sender=player)
 def delete_playrt_from_squad(sender,instance,**kwargs) :
+        db=sqlite3.connect(os.path.join(BASE_DIR,'db.sqlite3'))
         team=Team.objects.get(name=instance.team)
         team.squad["squad"].remove([instance.id,instance.name])
         team.save()
+        db.commit()
