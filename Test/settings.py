@@ -32,6 +32,7 @@ CSRF_TRUSTED_ORIGINS = ['https://dorf-eqgke9bqgzb3hgeg.norwayeast-01.azurewebsit
 
 INSTALLED_APPS = [
     "content",
+    "accounts",
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
