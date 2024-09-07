@@ -73,15 +73,15 @@ WSGI_APPLICATION = 'Test.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+from decouple import config
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'defaultdb',
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_ht_-KNbCD8VSuZR6aM8',
-        'HOST': 'firstdjango-kareemabolisa-074f.d.aivencloud.com',
-        'PORT': '17727',       # Default PostgreSQL port
+        'NAME': config('defaultdb'),
+        'USER': config('avnadmin'),
+        'PASSWORD': config('AVNS_ht_-KNbCD8VSuZR6aM8'),
+        'HOST': config('firstdjango-kareemabolisa-074f.d.aivencloud.com'),
+        'PORT': config('17727'),     # Default PostgreSQL port
     },
     'OPTIONS': {
             'sslmode': 'require',  # Ensure SSL mode is required
