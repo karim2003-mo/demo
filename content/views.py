@@ -1,7 +1,5 @@
-from django.shortcuts import render,get_list_or_404
-import json
 from .models import *
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 def getchamp(text)-> list :
     l=[]
     my_text=str(text)
