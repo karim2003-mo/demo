@@ -77,11 +77,11 @@ from decouple import config
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('defaultdb'),
-        'USER': config('avnadmin'),
-        'PASSWORD': config('AVNS_ht_-KNbCD8VSuZR6aM8'),
-        'HOST': config('firstdjango-kareemabolisa-074f.d.aivencloud.com'),
-        'PORT': config('17727'),     # Default PostgreSQL port
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),    # Default PostgreSQL port
     },
     'OPTIONS': {
             'sslmode': 'require',  # Ensure SSL mode is required
