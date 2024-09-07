@@ -88,8 +88,7 @@ def add_playrt_to_squad(sender,instance,created,**kwargs) :
         db.commit()
 @receiver(post_delete,sender=player)
 def delete_playrt_from_squad(sender,instance,**kwargs) :
-        db=sqlite3.connect(os.path.join(BASE_DIR,'db.sqlite3'))
+    if instance.team != None:
         team=Team.objects.get(name=instance.team)
         team.squad["squad"].remove([instance.id,instance.name])
         team.save()
-        db.commit()
