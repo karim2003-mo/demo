@@ -76,9 +76,16 @@ WSGI_APPLICATION = 'Test.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'defaultdb',
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_ht_-KNbCD8VSuZR6aM8',
+        'HOST': 'firstdjango-kareemabolisa-074f.d.aivencloud.com',
+        'PORT': '17727',       # Default PostgreSQL port
+    },
+    'OPTIONS': {
+            'sslmode': 'require',  # Ensure SSL mode is required
+        },
 }
 
 
