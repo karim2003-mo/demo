@@ -33,4 +33,6 @@ def signup(request) :
             return JsonResponse({"status":"succes"})
         except:
             return JsonResponse({"status":"error"})
+    else :
+        return JsonResponse({"status":"unexcepected request"})
 # Create your views here.
