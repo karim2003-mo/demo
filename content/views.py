@@ -64,6 +64,7 @@ def view_player(request,team,) :
             "assists" : pl.assist,
             "yellow card" :pl.yellow_card,
             "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
         }
         l.append(dat)
     return JsonResponse({"result" : l})
