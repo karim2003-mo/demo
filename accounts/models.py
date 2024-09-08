@@ -6,4 +6,5 @@ class Profile(models.Model) :
     favourite_club=models.CharField(null=True,blank=True)
     leagues=models.JSONField(default={"leagues":[]})
     squad=models.JSONField(default={"squad":[]})
+    squad_name=models.CharField(null=True,blank=True)
 # Create your models here.
