@@ -24,6 +24,8 @@ def login(request) :
                 return JsonResponse({"status":"fail",})
         except:
             return JsonResponse({"status":"error"})
+    else :
+        return JsonResponse({"status":"unexcepected request"})
 @csrf_exempt
 def signup(request) :
     if request.method=='POST' :

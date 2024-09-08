@@ -7,4 +7,6 @@ class Profile(models.Model) :
     leagues=models.JSONField(default={"leagues":[]})
     squad=models.JSONField(default={"squad":[]})
     squad_name=models.CharField(null=True,blank=True)
+    def __str__(self) -> str:
+        return self.user.username
 # Create your models here.
