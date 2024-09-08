@@ -1,4 +1,3 @@
-from django.shortcuts import render
 import json
 from .models import *
 from django.http import JsonResponse
@@ -8,11 +7,13 @@ from django.contrib.auth import authenticate
 def login(request) :
     if request.method=='POST' :
         try :
-            data = json.loads(request.body)
+            data=json.loads(request.body)
+            print(request.body)
             username = data.get('username')
-            passowrd = data.get('password')
-            user= authenticate(username,passowrd)
+            password = data.get('password')
+            user= authenticate(request,username=username, password=password)
             if user is not None :
+                print("user found")
                 x_user=User.objects.get(username=username)
                 profile_data=Profile.objects.get(user=x_user)
                 return JsonResponse({"status":"succes",
@@ -22,7 +23,7 @@ def login(request) :
                                     }})
             else :
                 return JsonResponse({"status":"fail",})
-        except:
+        except Exception as e:
             return JsonResponse({"status":"error"})
     else :
         return JsonResponse({"status":"unexcepected request"})
