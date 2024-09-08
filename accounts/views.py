@@ -11,11 +11,17 @@ def login(request) :
             data = json.loads(request.body)
             username = data.get('username')
             passowrd = data.get('password')
-            User= authenticate(username,passowrd)
-            if User is not None :
-                return JsonResponse({"status":"succes"})
+            user= authenticate(username,passowrd)
+            if user is not None :
+                x_user=User.objects.get(username=username)
+                profile_data=Profile.objects.get(user=x_user)
+                return JsonResponse({"status":"succes",
+                                    "account":{
+                                        "score":profile_data.score,
+                                        "favourite club":profile_data.favourite_club,
+                                    }})
             else :
-                return JsonResponse({"status":"fail"})
+                return JsonResponse({"status":"fail",})
         except:
             return JsonResponse({"status":"error"})
 @csrf_exempt
