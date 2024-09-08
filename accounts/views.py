@@ -30,7 +30,7 @@ def signup(request) :
         try :
             data = json.loads(request.body)
             username = data.get('username')
-            passowrd = data.get('passwrd')
+            passowrd = data.get('password')
             email= data.get('email')
             user= User.objects.create_user(email=email,password=passowrd,username=username)
             profile=Profile.objects.create(user=user)
