@@ -3,6 +3,19 @@ from .models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
+def profile_data(request,id) :
+    profile=Profile.objects.get(pk=id)
+    data={"status" : "succes",
+          "userdata" :{
+              "username" :profile.user.username,
+              "squad name" : profile.squad_name,
+              "squad":profile.squad["squad"],
+              "score" :profile.score["score"],
+              "favourite club" :profile.favourite_club,
+              "leagues":profile.leagues,
+          }
+            }
+    return JsonResponse({"result":data})
 @csrf_exempt
 def login(request) :
     if request.method=='POST' :
@@ -41,18 +54,4 @@ def signup(request) :
             return JsonResponse({"status":"error"})
     else :
         return JsonResponse({"status":"unexcepected request"})
-@csrf_exempt
-def profile_data(request,id) :
-    profile=Profile.objects.get(pk=id)
-    data={"status" : "succes",
-          "userdata" :{
-              "username" :profile.user.username,
-              "squad name" : profile.squad_name,
-              "squad":profile.squad["squad"],
-              "score" :profile.score["score"],
-              "favourite club" :profile.favourite_club,
-              "leagues":profile.leagues,
-          }
-            }
-    return JsonResponse({"result":data})
 # Create your views here.
