@@ -17,10 +17,7 @@ def login(request) :
                 x_user=User.objects.get(username=username)
                 profile_data=Profile.objects.get(user=x_user)
                 return JsonResponse({"status":"succes",
-                                    "account":{
-                                        "score":profile_data.score,
-                                        "favourite club":profile_data.favourite_club,
-                                    }})
+                                    "id":profile_data.pk})
             else :
                 return JsonResponse({"status":"fail",})
         except Exception as e:
@@ -44,4 +41,18 @@ def signup(request) :
             return JsonResponse({"status":"error"})
     else :
         return JsonResponse({"status":"unexcepected request"})
+@csrf_exempt
+def profile_data(request,id) :
+    profile=Profile.objects.get(pk=id)
+    data={"status" : "succes",
+          "userdata" :{
+              "username" :profile.user.username,
+              "squad name" : profile.squad_name,
+              "squad":profile.squad["squad"],
+              "score" :profile.score["score"],
+              "favourite club" :profile.favourite_club,
+              "leagues":profile.leagues,
+          }
+            }
+    return JsonResponse({"result":data})
 # Create your views here.
