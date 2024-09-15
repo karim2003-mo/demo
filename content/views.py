@@ -36,7 +36,7 @@ def view_player(request,team,) :
     obj=Team.objects.get(name=team).squad["squad"]
     l=[]
     for i in obj:
-        pl=player.objects.get(pk=i[0])
+        pl=Player.objects.get(pk=i[0])
         birth=str(pl.birht_date).strip()
         age=2024-int(birth)
         curr=0
@@ -66,4 +66,152 @@ def view_player(request,team,) :
         }
         l.append(dat)
     return JsonResponse({"result" : l})
+def Gk(request) :
+    l=[]
+    jsonlist=[]
+    all_players=list(Player.objects.all())
+    for i in all_players :
+        if i.position=="Gk" :
+            l.append(Player.objects.get(pk=i.pk))
+    print(l)
+    for pl in l :
+        birth=str(pl.birht_date).strip()
+        age=2024-int(birth)
+        if pl.current_value != None :
+            if int(pl.current_value) <=1000 :
+                curr=f"{pl.current_value}k $"
+            else :
+                curr=f"{float(pl.current_value/1000)}m $"
+        team_name=""
+        if pl.team !=None :
+            team_name=pl.team.name
+        dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':team_name,
+            'possition' :pl.position,
+            'nationality':pl.nationality,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
+        }
+        jsonlist.append(dat)
+    return JsonResponse({"result":jsonlist})
+def Cb(request) :
+    l=[]
+    jsonlist=[]
+    all_players=list(Player.objects.all())
+    for i in all_players :
+        if i.position=="cb" or i.position=="Lb"or i.position=="Rb"  :
+            l.append(Player.objects.get(pk=i.pk))
+    print(l)
+    for pl in l :
+        birth=str(pl.birht_date).strip()
+        age=2024-int(birth)
+        if pl.current_value != None :
+            if int(pl.current_value) <=1000 :
+                curr=f"{pl.current_value}k $"
+            else :
+                curr=f"{float(pl.current_value/1000)}m $"
+        team_name=""
+        if pl.team !=None :
+            team_name=pl.team.name
+        dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':team_name,
+            'possition' :pl.position,
+            'nationality':pl.nationality,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
+        }
+        jsonlist.append(dat)
+    return JsonResponse({"result":jsonlist})
+def Cmf(request) :
+    l=[]
+    jsonlist=[]
+    all_players=list(Player.objects.all())
+    for i in all_players :
+        if i.position=="Dmf" or i.position=="Cmf"or i.position=="Amf"or i.position=="Rwf"or i.position=="Lwf"  :
+            l.append(Player.objects.get(pk=i.pk))
+    print(l)
+    for pl in l :
+        birth=str(pl.birht_date).strip()
+        age=2024-int(birth)
+        if pl.current_value != None :
+            if int(pl.current_value) <=1000 :
+                curr=f"{pl.current_value}k $"
+            else :
+                curr=f"{float(pl.current_value/1000)}m $"
+        team_name=""
+        if pl.team !=None :
+            team_name=pl.team.name
+        dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':team_name,
+            'possition' :pl.position,
+            'nationality':pl.nationality,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
+        }
+        jsonlist.append(dat)
+    return JsonResponse({"result":jsonlist})
+def Cf(request) :
+    l=[]
+    jsonlist=[]
+    all_players=list(Player.objects.all())
+    for i in all_players :
+        if i.position=="Cf" or i.position=="Ss"  :
+            l.append(Player.objects.get(pk=i.pk))
+    print(l)
+    for pl in l :
+        birth=str(pl.birht_date).strip()
+        age=2024-int(birth)
+        if pl.current_value != None :
+            if int(pl.current_value) <=1000 :
+                curr=f"{pl.current_value}k $"
+            else :
+                curr=f"{float(pl.current_value/1000)}m $"
+        team_name=""
+        if pl.team !=None :
+            team_name=pl.team.name
+        dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':team_name,
+            'possition' :pl.position,
+            'nationality':pl.nationality,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
+        }
+        jsonlist.append(dat)
+    return JsonResponse({"result":jsonlist})
 # Create your views here.

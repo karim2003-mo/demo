@@ -6,14 +6,14 @@ from django.contrib.auth import authenticate
 def profile_data(request,id) :
     profile=Profile.objects.get(pk=id)
     data={"status" : "succes",
-          "userdata" :{
-              "username" :profile.user.username,
-              "squad name" : profile.squad_name,
-              "squad":profile.squad["squad"],
-              "score" :profile.score["score"],
-              "favourite club" :profile.favourite_club,
-              "leagues":profile.leagues['leagues'],
-          }
+        "userdata" :{
+            "username" :profile.user.username,
+            "squad name" : profile.squad_name,
+            "squad":profile.squad["squad"],
+            "score" :profile.score["score"],
+            "favourite club" :profile.favourite_club,
+            "leagues":profile.leagues['leagues'],
+        }
             }
     return JsonResponse({"result":data})
 @csrf_exempt
@@ -54,4 +54,18 @@ def signup(request) :
             return JsonResponse({"status":"error"})
     else :
         return JsonResponse({"status":"unexcepected request"})
+@csrf_exempt
+def postplayer(request) :
+    if request.method=='POST' :
+        try :
+            data = json.loads(request.body)
+            id=data['id']
+            user=data['user']
+            squad=Profile.objects.get(pk=user)
+            squad.squad['squad'].append(id)
+            return JsonResponse({"status":"succes"})
+        except :
+            return JsonResponse({"status":"fail"})
+    else :
+        return JsonResponse({"status":"unexcepectedrequest"})
 # Create your views here.

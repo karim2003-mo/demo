@@ -13,7 +13,7 @@ class Team(models.Model) :
     squad=models.JSONField(default={"squad" : []})
     def __str__(self) -> str:
         return self.name
-class player(models.Model) :
+class Player(models.Model) :
     x=[
     ("Gk","Gk"),
     ("Lb","Lb"),
@@ -42,7 +42,7 @@ class player(models.Model) :
     current_value=models.IntegerField(null=True,blank=True)
     def __str__(self) -> str:
         return self.name
-@receiver(pre_save,sender=player)
+@receiver(pre_save,sender=Player)
 def transefer_player(sender,instance,**kwargs) :
     
     
@@ -70,7 +70,7 @@ def transefer_player(sender,instance,**kwargs) :
                     old_team.save()
     except :
         pass
-@receiver(post_save,sender=player)
+@receiver(post_save,sender=Player)
 def add_playrt_to_squad(sender,instance,created,**kwargs) :
     if created and instance.team !=None :
         team=Team.objects.get(name=instance.team)
@@ -79,7 +79,7 @@ def add_playrt_to_squad(sender,instance,created,**kwargs) :
         if [instance.id,instance.name] not in team.squad["squad"]:
                 team.squad["squad"].append([instance.id,instance.name])
         team.save()
-@receiver(post_delete,sender=player)
+@receiver(post_delete,sender=Player)
 def delete_playrt_from_squad(sender,instance,**kwargs) :
     if instance.team != None:
         team=Team.objects.get(name=instance.team)
