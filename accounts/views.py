@@ -63,6 +63,7 @@ def postplayer(request) :
             user=data['user']
             squad=Profile.objects.get(pk=user)
             squad.squad['squad'].append(id)
+            squad.save()
             return JsonResponse({"status":"succes"})
         except :
             return JsonResponse({"status":"fail"})
