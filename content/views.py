@@ -78,7 +78,7 @@ def Gk(request) :
         birth=str(pl.birht_date).strip()
         age=2024-int(birth)
         if pl.current_value != None :
-            if int(pl.current_value) <=1000 :
+            if int(pl.current_value) <1000 :
                 curr=f"{pl.current_value}k $"
             else :
                 curr=f"{float(pl.current_value/1000)}m $"
@@ -115,7 +115,7 @@ def Cb(request) :
         birth=str(pl.birht_date).strip()
         age=2024-int(birth)
         if pl.current_value != None :
-            if int(pl.current_value) <=1000 :
+            if int(pl.current_value) <1000 :
                 curr=f"{pl.current_value}k $"
             else :
                 curr=f"{float(pl.current_value/1000)}m $"
@@ -152,7 +152,7 @@ def Cmf(request) :
         birth=str(pl.birht_date).strip()
         age=2024-int(birth)
         if pl.current_value != None :
-            if int(pl.current_value) <=1000 :
+            if int(pl.current_value) <1000 :
                 curr=f"{pl.current_value}k $"
             else :
                 curr=f"{float(pl.current_value/1000)}m $"
@@ -189,7 +189,7 @@ def Cf(request) :
         birth=str(pl.birht_date).strip()
         age=2024-int(birth)
         if pl.current_value != None :
-            if int(pl.current_value) <=1000 :
+            if int(pl.current_value) <1000 :
                 curr=f"{pl.current_value}k $"
             else :
                 curr=f"{float(pl.current_value/1000)}m $"
