@@ -7,4 +7,5 @@ urlpatterns = [
     path("players/Cb/",views.Cb,name="Gk"),
     path("players/Cmf/",views.Cmf,name="Gk"),
     path("players/Cf/",views.Cf,name="Gk"),
+    path("players/getsquad/",views.getsquad,name="getsquad"),
 ]
