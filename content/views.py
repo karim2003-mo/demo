@@ -1,5 +1,7 @@
 from .models import *
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 def getchamp(text)-> list :
     l=[]
     my_text=str(text)
@@ -214,4 +216,42 @@ def Cf(request) :
         }
         jsonlist.append(dat)
     return JsonResponse({"result":jsonlist})
+csrf_exempt
+def getsquad(request):
+    if request.methos=='POST' :
+        l=[]
+        data=json.loads(request.body)
+        list=data['list']
+        for i in list :
+            pl=Player.objects.get(pk=i)
+            birth=str(pl.birht_date).strip()
+            age=2024-int(birth)
+            if pl.current_value != None :
+                if int(pl.current_value) <1000 :
+                    curr=f"{pl.current_value}k $"
+                else :
+                    curr=f"{float(pl.current_value/1000)}m $"
+            team_name=""
+            if pl.team !=None :
+                team_name=pl.team.name
+            dat= {
+            'id':pl.pk,
+            'name' :pl.name,
+            'number':pl.number,
+            'image':pl.image,
+            'team':team_name,
+            'possition' :pl.position,
+            'nationality':pl.nationality,
+            'age':age,
+            'current value':curr,
+            "goals" :pl.goals,
+            "assists" : pl.assist,
+            "yellow card" :pl.yellow_card,
+            "red card" : pl.red_card,
+            "clean sheet":pl.clean_sheet,
+            }
+            l.append(dat)
+        return JsonResponse({"result":dat})
+    else :
+        return JsonResponse({"result":"fail"})
 # Create your views here.
