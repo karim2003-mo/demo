@@ -216,9 +216,9 @@ def Cf(request) :
         }
         jsonlist.append(dat)
     return JsonResponse({"result":jsonlist})
-csrf_exempt
+@csrf_exempt
 def getsquad(request):
-    if request.methos=='POST' :
+    if request.method=='POST' :
         l=[]
         data=json.loads(request.body)
         list=data['list']
@@ -251,7 +251,7 @@ def getsquad(request):
             "clean sheet":pl.clean_sheet,
             }
             l.append(dat)
-        return JsonResponse({"result":dat})
+        return JsonResponse({"result":l})
     else :
         return JsonResponse({"result":"fail"})
 # Create your views here.
