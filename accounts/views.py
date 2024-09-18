@@ -14,6 +14,10 @@ def profile_data(request,id) :
             "favourite club" :profile.favourite_club,
             "leagues":profile.leagues['leagues'],
             "current_balance":profile.current_balance,
+            "wildcard":profile.wildcard,
+            "freehit":profile.freehit,
+            "tripplecaptain":profile.tripplecaptin,
+            "availiable transefere":profile.availiable_tarnsefere,
         }
             }
     return JsonResponse({"result":data})
