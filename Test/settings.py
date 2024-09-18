@@ -88,6 +88,16 @@ DATABASES = {
             'sslmode': 'require',  # Ensure SSL mode is required
         },
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "Football",
+#         'USER': "postgres",
+#         'PASSWORD': "012064258",
+#         'HOST': "localhost",
+#         'PORT': "5000",    # Default PostgreSQL port
+#     },
+# }
 
 
 # Password validation

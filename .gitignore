@@ -1,3 +1,4 @@
 # created by virtualenv automatically
 .env
 .sqlite3
+local_data.json

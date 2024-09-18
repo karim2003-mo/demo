@@ -13,6 +13,7 @@ def profile_data(request,id) :
             "score" :profile.score["score"],
             "favourite club" :profile.favourite_club,
             "leagues":profile.leagues['leagues'],
+            "current_balance":profile.current_balance,
         }
             }
     return JsonResponse({"result":data})
