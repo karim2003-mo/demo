@@ -69,7 +69,8 @@ def postplayer(request) :
             balance=data['balance']
             squad=Profile.objects.get(pk=user)
             squad.current_balance=balance
-            squad.squad['squad'].append(id)
+            for i in id :
+                squad.squad['squad'].append(i)
             squad.save()
             return JsonResponse({"status":"succes"})
         except :
