@@ -66,7 +66,9 @@ def postplayer(request) :
             data = json.loads(request.body)
             id=data['id']
             user=data['user']
+            balance=data['balance']
             squad=Profile.objects.get(pk=user)
+            squad.current_balance=balance
             squad.squad['squad'].append(id)
             squad.save()
             return JsonResponse({"status":"succes"})
