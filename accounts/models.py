@@ -6,11 +6,13 @@ class Profile(models.Model) :
     favourite_club=models.CharField(null=True,blank=True)
     leagues=models.JSONField(default={"leagues":[]})
     squad=models.JSONField(default={"squad":[]})
+    substitution=models.JSONField(default={"subs":[]})
     squad_name=models.CharField(null=True,blank=True)
     current_balance=models.FloatField(default=12)
     wildcard=models.BooleanField(default=True)
     freehit=models.BooleanField(default=True)
     tripplecaptin=models.BooleanField(default=True)
+    benchboast=models.BooleanField(default=True)
     availiable_tarnsefere=models.IntegerField(default=35)
     def __str__(self) -> str:
         return self.user.username
