@@ -30,7 +30,7 @@ class Player(models.Model) :
     name=models.CharField(max_length=30,null=True,blank=True)
     number=models.IntegerField(blank=True,null=True)
     birht_date=models.CharField(max_length=30,null=True,blank=True)
-    image=models.TextField(null=True,blank=True)
+    image=models.TextField(default="https://raw.githubusercontent.com/karim2003-mo/football-images/master/players/")
     team=models.ForeignKey(Team,null=True,blank=True,on_delete=models.PROTECT)
     nationality=models.CharField(max_length=30,null=True,blank=True)
     position=models.CharField(max_length=30,null=True, blank=True,choices=x)
@@ -41,7 +41,9 @@ class Player(models.Model) :
     red_card = models.IntegerField(null=True,blank=True)
     current_value=models.IntegerField(null=True,blank=True)
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} ==============> {self.team.name}'
+    class Meta :
+        ordering=['team','name']
 @receiver(pre_save,sender=Player)
 def transefer_player(sender,instance,**kwargs) :
     
