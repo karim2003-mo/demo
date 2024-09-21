@@ -19,6 +19,7 @@ def profile_data(request,id) :
             "freehit":profile.freehit,
             "tripplecaptain":profile.tripplecaptin,
             "availiable transefere":profile.availiable_tarnsefere,
+            "subs" : profile.substitution,
         }
             }
     return JsonResponse({"result":data})
@@ -68,8 +69,10 @@ def postplayer(request) :
             id=data['id']
             user=data['user']
             balance=data['balance']
+            sub=data['subs']
             squad=Profile.objects.get(pk=user)
             squad.current_balance=balance
+            squad.substitution=sub
             for i in id :
                 squad.squad['squad'].append(i)
             squad.save()
