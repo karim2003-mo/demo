@@ -19,7 +19,7 @@ def profile_data(request,id) :
             "freehit":profile.freehit,
             "tripplecaptain":profile.tripplecaptin,
             "availiable transefere":profile.availiable_tarnsefere,
-            "subs" : profile.substitution,
+            "subs" : profile.substitution['subs'],
         }
             }
     return JsonResponse({"result":data})
