@@ -7,6 +7,7 @@ def profile_data(request,id) :
     profile=Profile.objects.get(pk=id)
     data={"status" : "succes",
         "userdata" :{
+            "id":profile.pk,
             "username" :profile.user.username,
             "squad name" : profile.squad_name,
             "squad":profile.squad["squad"],
