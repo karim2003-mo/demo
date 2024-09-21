@@ -81,4 +81,19 @@ def postplayer(request) :
             return JsonResponse({"status":"fail"})
     else :
         return JsonResponse({"status":"unexcepectedrequest"})
+@csrf_exempt
+def substitution(request):
+    if request.method=='POST' :
+        try :
+            data = json.loads(request.body)
+            sub=data['sub']
+            user=data['user']
+            subs=Profile.objects.get(pk=user)
+            subs.substitution['subs']=sub
+            subs.save()
+            return JsonResponse({"status":"succes"})
+        except :
+            return JsonResponse({"status":"fail"})
+    else :
+        return JsonResponse({"status":"unexcepectedrequest"})
 # Create your views here.
