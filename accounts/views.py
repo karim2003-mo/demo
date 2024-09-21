@@ -72,7 +72,7 @@ def postplayer(request) :
             sub=data['subs']
             squad=Profile.objects.get(pk=user)
             squad.current_balance=balance
-            squad.substitution=sub
+            squad.substitution["subs"]=sub
             for i in id :
                 squad.squad['squad'].append(i)
             squad.save()
