@@ -16,4 +16,3 @@ class Profile(models.Model) :
     availiable_tarnsefere=models.IntegerField(default=35)
     def __str__(self) -> str:
         return self.user.username
-# Create your models here.
