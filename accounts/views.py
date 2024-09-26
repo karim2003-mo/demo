@@ -22,6 +22,7 @@ def profile_data(request,id) :
             "subs" : profile.substitution['subs'],
             "captain":profile.captin,
             "vice":profile.vice,
+            "benchboast":profile.benchboast,
         }
             }
     return JsonResponse({"result":data})
