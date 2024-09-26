@@ -86,9 +86,13 @@ def substitution(request):
         try :
             data = json.loads(request.body)
             sub=data['sub']
+            tripple=data['tripple']
+            bench=data['bench']
             user=data['user']
             subs=Profile.objects.get(pk=user)
             subs.substitution['subs']=sub
+            subs.benchboast=bench
+            subs.tripplecaptin=tripple
             subs.save()
             return JsonResponse({"status":"succes"})
         except :
