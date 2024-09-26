@@ -14,5 +14,7 @@ class Profile(models.Model) :
     tripplecaptin=models.BooleanField(default=True)
     benchboast=models.BooleanField(default=True)
     availiable_tarnsefere=models.IntegerField(default=35)
+    captin=models.IntegerField(null=True,blank=True)
+    vice=models.IntegerField(null=True,blank=True)
     def __str__(self) -> str:
         return self.user.username
