@@ -20,6 +20,8 @@ def profile_data(request,id) :
             "tripplecaptain":profile.tripplecaptin,
             "availiable transefere":profile.availiable_tarnsefere,
             "subs" : profile.substitution['subs'],
+            "captain":profile.captin,
+            "vice":profile.vice,
         }
             }
     return JsonResponse({"result":data})
