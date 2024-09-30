@@ -8,4 +8,6 @@ urlpatterns = [
     path("players/Cmf/",views.Cmf,name="Gk"),
     path("players/Cf/",views.Cf,name="Gk"),
     path("players/getsquad/",views.getsquad,name="getsquad"),
+    path("grep_events/",views.made_json_teams,name="grep_events"),
+    path("get_public_info/",views.get_public_info,name="get_public_info"),
 ]

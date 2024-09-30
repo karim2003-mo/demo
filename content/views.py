@@ -254,4 +254,36 @@ def getsquad(request):
         return JsonResponse({"result":l})
     else :
         return JsonResponse({"result":"fail"})
+def get_public_info(request) :
+    obj=LeagueInfo.objects.get()
+    data={"current round":obj.current_round,
+          "is dead line" :obj.is_deadline,
+          }
+    return JsonResponse({"result": data})
+def made_json_teams(request) :
+    teams=["Petrojet","Harras El Hodoud","Ghazl El Mahalla","El Gouna FC","Ismaily SC"
+    ,"Pharco FC","Ittihad Alexandria SC","Smouha SC","Enppi SC","Tala'ea El Gaish",
+    "Zed FC","Modern Sport Club","El Masry SC","Bank El Ahly","Cleopatra FC",
+    "Zamalek SC","Pyramids FC","Al Ahly FC"]
+    for i in teams :
+        obj=Team.objects.get(name=i)
+        data={"events":[],}
+        for j in obj.squad['squad']:
+            mp={"id":j[0],
+                "name":j[1],
+                "goals":0,
+                "assists":0,
+                "cleansheat":0,
+                "bounus" :0,
+                "keeping_penalty":0,
+                "make_penalty" :0,
+                "owngoal":0,
+                "yellow_card":0,
+                "redcard":0,
+                "num_keeping":0,
+                }
+            data["events"].append(mp)
+        with open(f"clubs/{i}.json","+w") as json_file :
+            json.dump(data,json_file,indent=4)
+    return JsonResponse({"status" : "success"})
 # Create your views here.

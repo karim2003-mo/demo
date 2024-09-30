@@ -1,6 +1,10 @@
 from django.db import models
+from django.contrib.admin.models import LogEntry
 from django.dispatch import receiver
 from django.db.models.signals import post_save ,pre_save,post_delete
+class LeagueInfo(models.Model) :
+    current_round=models.IntegerField(default=0)
+    is_deadline=models.BooleanField(default=False)
 class Team(models.Model) :
     name = models.CharField(max_length=30,null=True,blank=True)
     founded_at = models.DateField(null=True,blank=True)
@@ -11,6 +15,7 @@ class Team(models.Model) :
     local_super = models.IntegerField(null=True,blank=True)
     continental_cups = models.CharField(max_length=30,null=True,blank=True)
     squad=models.JSONField(default={"squad" : []})
+    pointsystem=models.JSONField(default={"pointsystem":[]})
     def __str__(self) -> str:
         return self.name
 class Player(models.Model) :
@@ -41,7 +46,7 @@ class Player(models.Model) :
     red_card = models.IntegerField(null=True,blank=True)
     current_value=models.IntegerField(null=True,blank=True)
     def __str__(self) -> str:
-        return f'{self.name} ==============> {self.team.name}'
+        return f'{self.pk}/{self.name} ==============> {self.team.name}'
     class Meta :
         ordering=['team','name']
 @receiver(pre_save,sender=Player)
