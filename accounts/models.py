@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from content.models import *
 class Profile(models.Model) :
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     score=models.JSONField(default={"score":[]})
@@ -7,6 +8,7 @@ class Profile(models.Model) :
     leagues=models.JSONField(default={"leagues":[]})
     squad=models.JSONField(default={"squad":[]})
     substitution=models.JSONField(default={"subs":[]})
+    round_stataics=models.JSONField(default={"statics":[]})
     squad_name=models.CharField(null=True,blank=True)
     current_balance=models.FloatField(default=12)
     wildcard=models.BooleanField(default=True)

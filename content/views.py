@@ -281,9 +281,29 @@ def made_json_teams(request) :
                 "yellow_card":0,
                 "redcard":0,
                 "num_keeping":0,
+                "is_play":0,
                 }
             data["events"].append(mp)
         with open(f"clubs/{i}.json","+w") as json_file :
             json.dump(data,json_file,indent=4)
     return JsonResponse({"status" : "success"})
+def player_points(request,type,team) :
+    with open(f"clubs/{team}.json","r") as json_file :
+        l=json.load(json_file)
+    obj_league_info=LeagueInfo.objects.get().current_round
+    club=Team.objects.get(name=team)
+    print(len(club.pointsystem['pointsystem']))
+    if type=="update" :
+        club.pointsystem['pointsystem'][obj_league_info-1]=l
+        club.save()
+        return JsonResponse({"result":"data was updated successfuly"})
+    elif type=="add" :
+        if len(club.pointsystem['pointsystem'])<obj_league_info :
+            club.pointsystem['pointsystem'].append(l)
+            club.save()
+            return JsonResponse({"result":"data was added successfuly"})
+        else :
+            return JsonResponse({"result":f"we are in round {obj_league_info}"})
+    else :
+        return JsonResponse({"result":"undefined request"})
 # Create your views here.

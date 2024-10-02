@@ -15,7 +15,7 @@ class Team(models.Model) :
     local_super = models.IntegerField(null=True,blank=True)
     continental_cups = models.CharField(max_length=30,null=True,blank=True)
     squad=models.JSONField(default={"squad" : []})
-    pointsystem=models.JSONField(default={"pointsystem":[]})
+    pointsystem=models.JSONField(default={"pointsystem" : []})
     def __str__(self) -> str:
         return self.name
 class Player(models.Model) :

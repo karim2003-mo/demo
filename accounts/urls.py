@@ -6,4 +6,5 @@ urlpatterns = [
     path("profile_data/<id>/", views.profile_data,name="profile"),
     path("postplayer/", views.postplayer,name="postplayer"),
     path("postsubs/", views.substitution,name="substitution"),
+    path("post_players_point/<str:type>/", views.post_players_point,name="substitution"),
 ]

@@ -3,6 +3,7 @@ from .models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
+from content.models import *
 def profile_data(request,id) :
     profile=Profile.objects.get(pk=id)
     data={"status" : "succes",
@@ -23,6 +24,7 @@ def profile_data(request,id) :
             "captain":profile.captin,
             "vice":profile.vice,
             "benchboast":profile.benchboast,
+            "points":profile.round_stataics
         }
             }
     return JsonResponse({"result":data})
@@ -106,4 +108,27 @@ def substitution(request):
             return JsonResponse({"status":"fail"})
     else :
         return JsonResponse({"status":"unexcepectedrequest"})
+def post_players_point(request,type) :
+    users=Profile.objects.all()
+    round=LeagueInfo.objects.get().current_round
+    for k in users :
+        l=[]
+        squad=k.squad['squad']
+        for i in squad :
+            player_team_obj=Player.objects.get(pk=i).team
+            team_obj=Team.objects.get(name=player_team_obj)
+            li=list(team_obj.pointsystem['pointsystem'][round-1]['events'])
+            for j in li :
+                if j['id']==i :
+                    l.append(j)
+        if type=="add" and len(k.round_stataics['statics'])<round :
+            k.round_stataics['statics'].append(l)
+            k.save()
+            return JsonResponse({"result" : "data was added"})
+        elif type=="update" :
+            k.round_stataics['statics'][round]=l
+            k.save()
+            return JsonResponse({"result" : "data was updated"})
+        else :
+            return JsonResponse({"result":"undefined request"})
 # Create your views here.
