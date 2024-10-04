@@ -2,15 +2,13 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - dorf
+name: Build and deploy Python app to Azure Web App - hammer
 
 on:
   push:
     branches:
       - master
   workflow_dispatch:
-  repository_dispatch:
-    types: [data_changed]
 
 jobs:
   build:
@@ -36,15 +34,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
-        
-      - name: Commit and Push changes
-        if: env.has_changes == 'true'
-        run: |
-          git config user.name "Karim Gamal Elsayed"
-          git config user.email "kareemabolisa@gmail.com"
-          git add dp.sqlite3
-          git commit -am "Automated commit: Update SQLite database"
-          git push origin master
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
@@ -59,9 +49,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -70,26 +58,12 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      - name: Commit and Push changes
-        if: env.has_changes == 'true'
-        run: |
-          git config user.name "Karim Gamal Elsayed"
-          git config user.email "kareemabolisa@gmail.com"
-          git add db.sqlite3
-          git commit -am "Automated commit: Update SQLite database"
-          git push origin master
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3467A036C1054D46BCE93EAB03E93649 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_421C6CE689774D1FBBAB06FCE8043159 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_07C7E432F6064DC0AA74C12C6F889DFA }}
 
+      
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'dorf'
+          app-name: 'hammer'
           slot-name: 'Production'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4B4B34D2EB56491FAB5AFE3602F6E2A9 }}
