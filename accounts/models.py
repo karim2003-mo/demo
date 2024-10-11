@@ -4,7 +4,7 @@ from content.models import *
 class Profile(models.Model) :
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     is_email_verified=models.BooleanField(default=False)
-    score=models.JSONField(default={"score":[]})
+    score=models.JSONField(default={"score":[0]})
     favourite_club=models.CharField(null=True,blank=True)
     leagues=models.JSONField(default={"leagues":[]})
     squad=models.JSONField(default={"squad":[]})

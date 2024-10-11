@@ -73,7 +73,7 @@ def signup(request) :
             sender_email="kickpoint793@gmail.com"
             sender_pass="fnbv gddn segw qutx"
             receiver_email =email
-            subject="workshop for the third day"
+            subject="email verification"
             body=f"https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/done/{receiver_email}"
             msg = MIMEMultipart()
             msg['From'] = sender_email
