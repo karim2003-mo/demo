@@ -3,9 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from django.http import JsonResponse , HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
 from .models import *
-@csrf_exempt
 def verify_account(request,email_address):
         k=0
         sender_email="kickpoint793@gmail.com"
@@ -18,7 +16,6 @@ def verify_account(request,email_address):
         msg['To'] = receiver_email
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain'))
-        data = json.loads(request.body)
         try :
             server = smtplib.SMTP('smtp.gmail.com', 587)
             print(k)
