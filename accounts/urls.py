@@ -9,6 +9,6 @@ urlpatterns = [
     path("postsubs/", views.substitution,name="substitution"),
     path("post_players_point/<str:type>/", views.post_players_point,name="substitution"),
     path("add_score/<str:type>/", views.update_users_score,name="add_score"),
-    path("verify/", manage_accounts.verify_account,name="verify"),
-    path("done/<str:receiver_email>", manage_accounts.verification_done,name="verify"),
+    path("verify/<str:email_address>/", manage_accounts.verify_account,name="verify"),
+    path("done/<str:receiver_email>", manage_accounts.verification_done,name="done"),
 ]

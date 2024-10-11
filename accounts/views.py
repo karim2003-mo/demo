@@ -66,7 +66,7 @@ def signup(request) :
             profile=Profile.objects.create(user=user)
             user.save()
             profile.save()
-            return redirect('verify_account',email_address=email)
+            return redirect(f'/accounts/verify_account/{email}')
         except:
             return JsonResponse({"status":"error"})
     else :
