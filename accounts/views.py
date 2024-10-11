@@ -1,4 +1,7 @@
 import json
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from .models import *
 from django.http import JsonResponse,HttpRequest
 from django.views.decorators.csrf import csrf_exempt
@@ -66,7 +69,27 @@ def signup(request) :
             profile=Profile.objects.create(user=user)
             user.save()
             profile.save()
-            return redirect(f'https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/verify/{email}/')
+            print("===================")
+            sender_email="kickpoint793@gmail.com"
+            sender_pass="fnbv gddn segw qutx"
+            receiver_email =email
+            subject="workshop for the third day"
+            body=f"https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/done/{receiver_email}"
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = receiver_email
+            msg['Subject'] = subject
+            msg.attach(MIMEText(body, 'plain'))
+            try :
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()  # Secure the connection
+                server.login(sender_email, sender_pass)
+                server.sendmail(sender_email, receiver_email, msg.as_string())
+                server.quit()
+                return JsonResponse({"result" : "the email has been sent"})
+            except Exception as e :
+                print(e)
+                return JsonResponse({"result" : "the email has not been sent"})
         except:
             return JsonResponse({"status":"error"})
     else :
