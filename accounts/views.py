@@ -66,7 +66,7 @@ def signup(request) :
             profile=Profile.objects.create(user=user)
             user.save()
             profile.save()
-            return HttpRequest(f'https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/verify/{email}/')
+            return redirect(f'https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/verify/{email}/')
         except:
             return JsonResponse({"status":"error"})
     else :
