@@ -1,6 +1,6 @@
 import json
 from .models import *
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from content.models import *
@@ -66,7 +66,7 @@ def signup(request) :
             profile=Profile.objects.create(user=user)
             user.save()
             profile.save()
-            return redirect(f'/accounts/verify/{email}/')
+            return HttpRequest(f'https://hammer-e3g9bhd2g8dfe6b2.spaincentral-01.azurewebsites.net/accounts/verify/{email}/')
         except:
             return JsonResponse({"status":"error"})
     else :
