@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from content.models import *
+from .manage_accounts import *
+from django.shortcuts import redirect
 def profile_data(request,id) :
     profile=Profile.objects.get(pk=id)
     data={"status" : "succes",
@@ -24,7 +26,8 @@ def profile_data(request,id) :
             "captain":profile.captin,
             "vice":profile.vice,
             "benchboast":profile.benchboast,
-            "points":profile.round_stataics
+            "points":profile.round_stataics,
+            "is_verified" : profile.is_email_verified
         }
             }
     return JsonResponse({"result":data})
@@ -42,7 +45,9 @@ def login(request) :
                 x_user=User.objects.get(username=username)
                 profile_data=Profile.objects.get(user=x_user)
                 return JsonResponse({"status":"succes",
-                                    "id":profile_data.pk})
+                                    "id":profile_data.pk
+                                    ,"is_verified" : profile_data.is_email_verified
+                                    })
             else :
                 return JsonResponse({"status":"fail",})
         except Exception as e:
@@ -61,7 +66,7 @@ def signup(request) :
             profile=Profile.objects.create(user=user)
             user.save()
             profile.save()
-            return JsonResponse({"status":"succes"})
+            return redirect(verify_account,email_address=email)
         except:
             return JsonResponse({"status":"error"})
     else :
@@ -126,9 +131,36 @@ def post_players_point(request,type) :
             k.save()
             return JsonResponse({"result" : "data was added"})
         elif type=="update" :
-            k.round_stataics['statics'][round]=l
+            k.round_stataics['statics'][round-1]=l
             k.save()
             return JsonResponse({"result" : "data was updated"})
         else :
             return JsonResponse({"result":"undefined request"})
+def update_users_score(request,type) :
+    Prs=Profile.objects.all()
+    round=LeagueInfo.objects.get().current_round
+    print(round)
+    for i in Prs :
+        total=0
+        try :
+            print(i.user)
+            print(len(i.round_stataics["statics"][round-1]))                                  
+            for j in i.round_stataics["statics"][round-1] :
+                players=Player.objects.get(id=j['id'])
+                clean=6*j['cleansheat'] if players.position in ["Gk","cb","Lb","Rb"] else 2 * j['cleansheat']
+                points=j["is_play"]+(5*j['goals'])+(4*j['assists'])+j['bounus']+clean+(6*j['keeping_penalty'])+int(0.25*j['num_keeping'])-((2*j['owngoal'])
+                +j['yellow_card']+(3*j['redcard'])+(2*j['make_penalty']))
+                print(points)
+                total+=points
+            print(total)
+            if type=="add" :
+                i.score['score'].append(total)
+                i.save()
+            elif type=="update" :
+                i.score['score'][round-1]=total
+                i.save()
+        except :
+            continue
+    return JsonResponse({"result":"done"})
+
 # Create your views here.
