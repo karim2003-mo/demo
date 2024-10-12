@@ -31,6 +31,7 @@ def profile_data(request,id) :
             "benchboast":profile.benchboast,
             "points":profile.round_stataics,
             "is_verified" : profile.is_email_verified
+            ,"died properties" : profile.properties_ex,
         }
             }
     return JsonResponse({"result":data})
@@ -124,7 +125,10 @@ def substitution(request):
             captin=data['captin']
             vice=data['vice']
             user=data['user']
+            propertties_ex=dict(data['pro'])
             subs=Profile.objects.get(pk=user)
+            for key , value in propertties_ex.items() :
+                subs.properties_ex[key]=value
             subs.substitution['subs']=sub
             subs.benchboast=bench
             subs.tripplecaptin=tripple
