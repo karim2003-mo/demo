@@ -125,10 +125,13 @@ def substitution(request):
             captin=data['captin']
             vice=data['vice']
             user=data['user']
-            propertties_ex=dict(data['pro'])
-            subs=Profile.objects.get(pk=user)
-            for key , value in propertties_ex.items() :
-                subs.properties_ex[key]=value
+            try :
+                propertties_ex=dict(data['pro'])
+                subs=Profile.objects.get(pk=user)
+                for key , value in propertties_ex.items() :
+                    subs.properties_ex[key]=value
+            except :
+                pass
             subs.substitution['subs']=sub
             subs.benchboast=bench
             subs.tripplecaptin=tripple
